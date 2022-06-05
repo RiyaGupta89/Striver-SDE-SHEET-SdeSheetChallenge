@@ -1,0 +1,68 @@
+class Pair{
+    int row;
+    int col;
+    Pair(int row,int col){
+        this.row=row;
+        this.col=col;
+    }
+}
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        int m=grid.length;
+        int n=grid[0].length;
+        int ans=0;
+        Boolean[][] visited = new Boolean[m][n];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                visited[i][j]=false;
+            }
+        }
+        
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]=='1'){
+                    if(visited[i][j]==false){
+                        dfs(i,j,visited,grid,m,n);
+                        ans+=1;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+    private void dfs(int cr,int cc, Boolean[][] visited, char[][] grid,int m,int n){
+        if(cr<0||cc<0||cr>=m||cc>=n||grid[cr][cc]!='1'){
+            return;
+        }
+        if(visited[cr][cc]==false){
+            visited[cr][cc]=true;
+            dfs(cr-1,cc,visited,grid,m,n);
+            dfs(cr+1,cc,visited,grid,m,n);
+            dfs(cr,cc-1,visited,grid,m,n);
+            dfs(cr,cc+1,visited,grid,m,n);
+        }
+        return;
+    }
+    
+    private void bfs(int cr,int cc, Boolean[][] visited, char[][] grid, int m, int n){
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(cr,cc));
+    
+        while(!q.isEmpty()){
+            Pair currentVertex  = q.remove();
+            int currRow = currentVertex.row;
+            int currCol = currentVertex.col;
+            if(currRow<0||currCol<0||currRow>=m||currCol>=n||grid[currRow][currCol]!='1'){
+                return;
+            }
+            if(visited[currRow][currCol]==false){
+                visited[currRow][currCol]=true;
+                q.add(new Pair(currRow-1,currCol));
+                q.add(new Pair(currRow+1,currCol));
+                q.add(new Pair(currRow,currCol-1));
+                q.add(new Pair(currRow,currCol+1));
+            }
+        }
+    }
+}
