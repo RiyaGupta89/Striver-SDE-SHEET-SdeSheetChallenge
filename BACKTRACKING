@@ -1,0 +1,45 @@
+class Solution {
+    public static ArrayList<String> findPath(int[][] m, int n) {
+        // Your code here
+        
+        ArrayList<String> answer = new ArrayList<>();
+        Boolean[][] visited = new Boolean[n][n];
+        String str="";
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                visited[i][j]=false;
+            }
+        }
+        findWays(0,0,m,n,visited,str,answer);
+        return answer;
+    }
+    private static void findWays(int cr, int cc, int[][] m, int n, Boolean[][] visited, String str, ArrayList<String> answer){
+       
+        if(cr==n-1&&cc==n-1){
+            answer.add(str);
+            
+            return;
+        }
+        if(cr<0||cc<0||cr>=n||cc>=n||m[cr][cc]!=1){
+            
+            return;
+        }
+        if(visited[cr][cc]==false){
+           visited[cr][cc]=true;
+      
+        findWays(cr-1,cc,m,n,visited,str+"U",answer);
+    
+        findWays(cr,cc+1,m,n,visited,str+"R",answer);
+        
+   
+        findWays(cr+1,cc,m,n,visited,str+"D",answer);
+        
+  
+        findWays(cr,cc-1,m,n,visited,str+"L",answer);
+        visited[cr][cc]=false;
+      
+       }
+    return;
+        
+    }
+}
