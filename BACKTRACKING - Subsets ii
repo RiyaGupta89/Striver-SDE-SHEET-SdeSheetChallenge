@@ -1,0 +1,24 @@
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        HashSet<List<Integer>> answer = new HashSet<>();
+        Arrays.sort(nums);
+        fillArray(0,nums, new ArrayList<>(),answer);
+        List<List<Integer>> res = new ArrayList<>(answer);
+        return res;   
+    }
+    
+    private void fillArray(int ci, int[] nums,List<Integer> currAns, HashSet<List<Integer>> answer){
+        if(ci>=nums.length){
+            answer.add(new ArrayList<>(currAns));
+            return;
+        }
+        
+        currAns.add(nums[ci]);
+        fillArray(ci+1,nums,currAns,answer);
+        currAns.remove(currAns.size()-1);
+        fillArray(ci+1,nums,currAns,answer);
+        return;
+        
+    }
+    
+}
