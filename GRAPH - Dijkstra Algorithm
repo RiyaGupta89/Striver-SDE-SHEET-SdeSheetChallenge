@@ -1,0 +1,45 @@
+
+class Pair implements Comparable<Pair>{
+    int vertex;
+    int cost;
+    Pair(int vertex,int cost){
+        this.vertex=vertex;
+        this.cost=cost;
+    }
+    public int compareTo(Pair p){
+        return this.cost - p.cost;
+    }
+}
+
+class Solution
+{
+    //Function to find the shortest distance of all the vertices
+    //from the source vertex S.
+    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
+    {
+        // Write your code here
+        
+        PriorityQueue<Pair> pq=new PriorityQueue<Pair>();
+        int[] cost = new int[V];
+        for(int i=0;i<V;i++){
+            cost[i]=-1;
+        }
+        
+        pq.add(new Pair(S,0));
+        while(!pq.isEmpty()){
+            Pair currentPair = pq.poll();
+            int currentVertex = currentPair.vertex;
+            int currentCost = currentPair.cost;
+            
+            if(cost[currentVertex]==-1){
+                cost[currentVertex]=currentCost;
+                ArrayList<ArrayList<Integer>> neighbour=adj.get(currentVertex);
+                for(int i=0;i<neighbour.size();i++){
+                    pq.add(new Pair(neighbour.get(i).get(0),neighbour.get(i).get(1)+currentCost));
+                }
+            }
+        }
+        return cost;
+    }
+}
+
